@@ -83,6 +83,14 @@ public class StockDaoJDBC implements StockDao {
 
     @Override
     public void delete(Stock obj) {
+        PreparedStatement st = null;
+        try{
+            st = conn.prepareStatement("DELETE FROM stock WHERE name = ?");
+            st.setString(1, "Teclado mecanico");
+            int rowsAffected = st.executeUpdate();
 
+        } catch (SQLException e) {
+            throw new DbException(e.getMessage());
+        }
     }
 }

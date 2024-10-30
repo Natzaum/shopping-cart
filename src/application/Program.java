@@ -26,6 +26,7 @@ public class Program {
 
         //stockDao.insert(st);
         stockDao.read(st);
+        stockDao.delete(st);
         //clientDAO.insert(cl);
 
         DB.closeConnection();
