@@ -1,11 +1,13 @@
 package model.DAO.IMP;
 
 import Store.Stock;
+import com.mysql.cj.protocol.Resultset;
 import db.DbException;
 import model.DAO.StockDao;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class StockDaoJDBC implements StockDao {
@@ -55,7 +57,23 @@ public class StockDaoJDBC implements StockDao {
 
     @Override
     public void read(Stock obj) {
+        String query = "SELECT * FROM stock";
 
+        try(PreparedStatement st = conn.prepareStatement(query)){
+            ResultSet rs = st.executeQuery();
+
+            while(rs.next()){
+                int id = rs.getInt("id");
+                String name = rs.getString("name");
+                String category = rs.getString("category");
+                double price = rs.getDouble("price");
+                int quantity = rs.getInt("Quantity");
+                System.out.printf("ID: %d, nome: %s, categoria: %s, preço: %.2f, quantidade: %d%n", id, name, category, price, quantity);
+            }
+        }
+        catch(SQLException e){
+            throw new DbException(e.getMessage());
+        }
     }
 
     @Override

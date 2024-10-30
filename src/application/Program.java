@@ -16,15 +16,16 @@ public class Program {
         Scanner sc = new Scanner(System.in);
 
         //System.out.println("Registre seu nome de usuario: ");
-        String name = sc.nextLine();
+        //String name = sc.nextLine();
 
-        Client cl = new Client(name);
+        //Client cl = new Client(name);
         Stock st = new Stock();
 
         //ClientDAO clientDAO = DaoFactory.createClientDao();
         StockDao stockDao = DaoFactory.createStockDao();
 
-        stockDao.insert(st);
+        //stockDao.insert(st);
+        stockDao.read(st);
         //clientDAO.insert(cl);
 
         DB.closeConnection();
