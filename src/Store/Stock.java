@@ -8,14 +8,32 @@ public class Stock implements Serializable {
     String name, category;
     double price = 0;
 
-    public Stock(String category, String name, double price) {
-        this.category = category;
+    public Stock(int id, String name, String category, double price, int quantity) {
+        this.ID = id;
         this.name = name;
+        this.category = category;
         this.price = price;
+        this.quantity = quantity;
     }
 
     public Stock() {
 
+    }
+
+    public int getID() {
+        return ID;
+    }
+
+    public void setID(int ID) {
+        this.ID = ID;
+    }
+
+    public int getQuantity() {
+        return quantity;
+    }
+
+    public void setQuantity(int quantity) {
+        this.quantity = quantity;
     }
 
     public String getName() {
@@ -65,4 +83,5 @@ public class Stock implements Serializable {
     public int hashCode() {
         return Objects.hash(ID, quantity, name, category, price);
     }
+
 }

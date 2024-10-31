@@ -1,7 +1,6 @@
 package model.DAO.IMP;
 
 import Store.Stock;
-import com.mysql.cj.protocol.Resultset;
 import db.DbException;
 import model.DAO.StockDao;
 
@@ -73,6 +72,31 @@ public class StockDaoJDBC implements StockDao {
         }
         catch(SQLException e){
             throw new DbException(e.getMessage());
+        }
+    }
+
+    @Override
+    public Stock findByName(String name) {
+        PreparedStatement st = null;
+        ResultSet rs = null;
+        try {
+            st = conn.prepareStatement("SELECT * FROM stock WHERE name = ?");
+            st.setString(1, name);
+            rs = st.executeQuery();
+
+            if (rs.next()) {
+                return new Stock(rs.getInt("id"), rs.getString("name"), rs.getString("category"), rs.getDouble("price"), rs.getInt("quantity"));
+            }
+            return null;
+        } catch (SQLException e) {
+            throw new DbException(e.getMessage());
+        } finally {
+            try {
+                if (st != null) st.close();
+                if (rs != null) rs.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
         }
     }
 
