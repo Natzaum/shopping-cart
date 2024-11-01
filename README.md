@@ -11,6 +11,7 @@ Features
 3- Automatically update stock after purchases.
 
 Requirements:
+
 1- Java Development Kit (JDK) 8 or higher. 
 
 2- MySQL Server.
