@@ -1,7 +1,6 @@
 package model.DAO.IMP;
 
 import Store.Stock;
-import com.mysql.cj.protocol.Resultset;
 import db.DbException;
 import model.DAO.StockDao;
 
