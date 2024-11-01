@@ -33,17 +33,26 @@ public class Program {
         }
 
         String prodName;
-
         while (true) {
             System.out.println("Produtos disponíveis:");
             stockDao.read(st);
+            cartDao.read(shC);
 
-            System.out.print("Digite o nome do produto desejado (ou 'sair' para finalizar a compra): ");
+            System.out.print("Digite o nome do produto desejado (ou 'sair' para finalizar a compra, 'remover' para remover um item do carrinho): ");
             prodName = sc.nextLine();
 
             if (prodName.equalsIgnoreCase("sair")) {
                 System.out.println("Nos vemos na próxima!");
                 break;
+            }
+
+            if (prodName.equalsIgnoreCase("remover")) {
+                System.out.print("Digite o nome do item que deseja remover do carrinho: ");
+                String itemName = sc.nextLine();
+
+                cartDao.deleteByName(itemName);
+                cartDao.read(shC);
+                continue;
             }
 
             System.out.print("Qual a quantidade desejada: ");
@@ -75,9 +84,8 @@ public class Program {
             } else {
                 System.out.println("Falha ao adicionar o produto.");
             }
-
-            cartDao.read(shC);
         }
+
 
         // Client cl = new Client(name);
 

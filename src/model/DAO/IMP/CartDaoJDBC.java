@@ -93,7 +93,27 @@ public class CartDaoJDBC implements CartDao {
     }
 
     @Override
-    public void delete(ShoppingCart obj) {
+    public void deleteByName(String productName) {
+        PreparedStatement st = null;
+        try {
+            st = conn.prepareStatement("DELETE FROM shoppingCart WHERE name = ?");
+            st.setString(1, productName);
 
+            int rowsAffected = st.executeUpdate();
+            if (rowsAffected > 0) {
+                System.out.println("Item '" + productName + "' removido com sucesso do carrinho!");
+            } else {
+                System.out.println("Item '" + productName + "' não encontrado no carrinho.");
+            }
+
+        } catch (SQLException e) {
+            throw new DbException(e.getMessage());
+        } finally {
+            try {
+                if (st != null) st.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
     }
 }

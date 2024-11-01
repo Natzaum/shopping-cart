@@ -23,7 +23,7 @@ public class StockDaoJDBC implements StockDao {
             String names[] = {"RTX 3060 ti 12gb", "Ryzen 7 2.5hz", "i5 9400f", "Cadeira Gamer", "Headset HyperX", "Teclado mecanico"};
             String categories[] = {"Eletronicos", "Eletronicos", "Eletronicos", "Conforto", "Perifericos", "Perifericos"};
             double prices[] = {3500.00, 600.00, 980.00, 600.00, 580.00, 260.00};
-            int quantity[] = {25, 20, 10, 3, 10, 20};
+            int quantity[] = {25, 20, 10, 20, 10, 20};
             int rowsAffected = 0;
 
             for (int i = 0; i < names.length; i++) {
