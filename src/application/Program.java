@@ -17,40 +17,57 @@ public class Program {
     public static void main(String[] args) {
         Connection conn = DB.getConnection();
         Scanner sc = new Scanner(System.in);
-        //ClientDAO clientDAO = DaoFactory.createClientDao();
+
+        ClientDAO clientDAO = DaoFactory.createClientDao();
         StockDao stockDao = DaoFactory.createStockDao();
         CartDao cartDao = DaoFactory.createCartDao();
+
+        Stock st = new Stock();
 
         //System.out.println("Registre seu nome de usuario: ");
         //String name = sc.nextLine();
 
-        Stock st = new Stock();
+        //stockDao.insert(st);
 
-        stockDao.insert(st);
-        System.out.println("Adicione itens ao carrinho:");
-        stockDao.read(st);
-        System.out.println("Digite o nome do produto desejado: ");
-        String prodName = sc.nextLine();
-        System.out.println("Qual a quantia desejada?");
-        int prodQnt = sc.nextInt();
+        String prodName;
 
-        Stock stockItem = stockDao.findByName(prodName);
+        while(true) {
+            System.out.println("Produtos disponiveis");
+            stockDao.read(st);
 
-        if (stockItem != null) {
-            // Calcula o valor total (price * quantity)
-            double totalValue = stockItem.getPrice() * prodQnt;
+            System.out.print("Digite o nome do produto desejado (ou 'sair' para finalizar a compra): ");
+            prodName = sc.nextLine();
 
-            // Cria o item do carrinho com todos os campos necessários
-            ShoppingCart cartItem = new ShoppingCart(stockItem.getID(), prodQnt, totalValue, stockItem.getPrice(), stockItem.getName(), stockItem.getCategory());
+            if (prodName.equalsIgnoreCase("sair")) {
+                System.out.println("Nos vemos na próxima!");
+                break;
+            }
 
-            // Insere no carrinho
-            cartDao.insert(cartItem);
+            System.out.print("Qual a quantia desejada: ");
+            int prodQnt = sc.nextInt();
+            sc.nextLine();
+
+            Stock stockItem = stockDao.findByName(prodName);
+
+            if (stockItem != null) {
+                double totalValue = stockItem.getPrice() * prodQnt;
+
+                ShoppingCart cartItem = new ShoppingCart(stockItem.getID(),
+                        prodQnt, totalValue, stockItem.getPrice(), stockItem.getName(),
+                        stockItem.getCategory());
+
+                cartDao.insert(cartItem);
+                if(prodQnt == 1) {
+                    System.out.println(prodQnt + " unidade de " + prodName + " adicionada com sucesso!");
+                }
+                else{
+                    System.out.println(prodQnt + " unidades de " + prodName + " adicionadas com sucesso!");
+                }
+            }
+            else{
+                System.out.println("Falha ao adicionar o produto.");
+            }
         }
-
-
-        sc.close();
-
-
         //Client cl = new Client(name);
 
         //stockDao.delete(st);
@@ -60,3 +77,4 @@ public class Program {
         sc.close();
     }
 }
+

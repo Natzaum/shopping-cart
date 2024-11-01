@@ -31,13 +31,9 @@ public class CartDaoJDBC implements CartDao {
             double totalValue = obj.getPrice() * obj.getQuantity();
             st.setDouble(6, totalValue);
 
-            int rowsAffected = st.executeUpdate();
+            st.executeUpdate();
 
-            if (rowsAffected > 0) {
-                System.out.println("Item adicionado ao carrinho com sucesso!");
-            } else {
-                System.out.println("Falha ao adicionar no carrinho.");
-            }
+
         } catch (SQLException e) {
             throw new DbException(e.getMessage());
         } finally {
@@ -56,7 +52,30 @@ public class CartDaoJDBC implements CartDao {
 
     @Override
     public void update(ShoppingCart obj) {
+        PreparedStatement st = null;
+        try {
+            st = conn.prepareStatement(
+                    "UPDATE shoppingCart SET quantity = ?, totalValue = ? WHERE id = ?"
+            );
+            st.setInt(1, obj.getQuantity());
+            st.setDouble(2, obj.getTotalValue());
+            st.setInt(3, obj.getId());
 
+            int rowsAffected = st.executeUpdate();
+            if (rowsAffected > 0) {
+                System.out.println("Item atualizado com sucesso no carrinho!");
+            } else {
+                System.out.println("Item não encontrado para atualização.");
+            }
+        } catch (SQLException e) {
+            throw new DbException(e.getMessage());
+        } finally {
+            try {
+                if (st != null) st.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
     }
 
     @Override
