@@ -116,4 +116,22 @@ public class CartDaoJDBC implements CartDao {
             }
         }
     }
+
+    @Override
+    public double calculateTotalValue() {
+        double totalValue = 0;
+        String query = "SELECT SUM(totalValue) AS total FROM shoppingCart";
+
+        try (PreparedStatement st = conn.prepareStatement(query);
+             ResultSet rs = st.executeQuery()) {
+
+            if (rs.next()) {
+                totalValue = rs.getDouble("total");
+            }
+        } catch (SQLException e) {
+            throw new DbException(e.getMessage());
+        }
+        return totalValue;
+    }
+
 }

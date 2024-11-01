@@ -25,8 +25,8 @@ public class Program {
         ShoppingCart shC = new ShoppingCart();
         Stock st = new Stock();
 
-        //System.out.println("Registre seu nome de usuario: ");
-        //String name = sc.nextLine();
+        System.out.println("Registre seu nome de usuario: ");
+        String name = sc.nextLine();
 
         if (stockDao.findByName(st.getName()) == null) {
             stockDao.insert(st);
@@ -36,7 +36,6 @@ public class Program {
         while (true) {
             System.out.println("Produtos disponíveis:");
             stockDao.read(st);
-            cartDao.read(shC);
 
             System.out.print("Digite o nome do produto desejado (ou 'sair' para finalizar a compra, 'remover' para remover um item do carrinho): ");
             prodName = sc.nextLine();
@@ -51,7 +50,9 @@ public class Program {
                 String itemName = sc.nextLine();
 
                 cartDao.deleteByName(itemName);
+                double totalCartValue = cartDao.calculateTotalValue();
                 cartDao.read(shC);
+                System.out.printf("Valor total do carrinho: R$ %.2f%n", totalCartValue);
                 continue;
             }
 
@@ -81,17 +82,21 @@ public class Program {
                 } else {
                     System.out.println(prodQnt + " unidades de " + prodName + " adicionadas com sucesso!");
                 }
+
+                double totalCartValue = cartDao.calculateTotalValue();
+                cartDao.read(shC);
+                System.out.printf("Valor total do carrinho: R$ %.2f%n", totalCartValue);
+
             } else {
                 System.out.println("Falha ao adicionar o produto.");
             }
         }
 
-
-        // Client cl = new Client(name);
+        Client cl = new Client(name);
 
         // stockDao.delete(st);
 
-        // clientDAO.insert(cl);
+        clientDAO.insert(cl);
 
         DB.closeConnection();
         sc.close();

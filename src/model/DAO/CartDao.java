@@ -7,4 +7,5 @@ public interface CartDao {
     void read(ShoppingCart obj);
     void update(ShoppingCart obj);
     void deleteByName(String productName);
+    double calculateTotalValue();
 }
