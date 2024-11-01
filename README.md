@@ -1,4 +1,5 @@
 Shopping Cart Application
+
 This project implements a shopping cart system in Java with a MySQL database for storing products, users, and cart items.
 
 Features
