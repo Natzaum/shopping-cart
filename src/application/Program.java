@@ -28,12 +28,14 @@ public class Program {
         //System.out.println("Registre seu nome de usuario: ");
         //String name = sc.nextLine();
 
-        //stockDao.insert(st);
+        if (stockDao.findByName(st.getName()) == null) {
+            stockDao.insert(st);
+        }
 
         String prodName;
 
-        while(true) {
-            System.out.println("Produtos disponiveis");
+        while (true) {
+            System.out.println("Produtos disponíveis:");
             stockDao.read(st);
 
             System.out.print("Digite o nome do produto desejado (ou 'sair' para finalizar a compra): ");
@@ -44,7 +46,7 @@ public class Program {
                 break;
             }
 
-            System.out.print("Qual a quantia desejada: ");
+            System.out.print("Qual a quantidade desejada: ");
             int prodQnt = sc.nextInt();
             sc.nextLine();
 
@@ -53,31 +55,37 @@ public class Program {
             if (stockItem != null) {
                 double totalValue = stockItem.getPrice() * prodQnt;
 
-                ShoppingCart cartItem = new ShoppingCart(stockItem.getID(),
-                        prodQnt, totalValue, stockItem.getPrice(), stockItem.getName(),
-                        stockItem.getCategory());
+                ShoppingCart cartItem = new ShoppingCart(
+                        stockItem.getID(),
+                        prodQnt,
+                        totalValue,
+                        stockItem.getPrice(),
+                        stockItem.getName(),
+                        stockItem.getCategory()
+                );
 
                 cartDao.insert(cartItem);
-                if(prodQnt == 1) {
+                stockDao.updateStockQuantity(prodName, prodQnt);
+
+                if (prodQnt == 1) {
                     System.out.println(prodQnt + " unidade de " + prodName + " adicionada com sucesso!");
-                }
-                else{
+                } else {
                     System.out.println(prodQnt + " unidades de " + prodName + " adicionadas com sucesso!");
                 }
-            }
-            else{
+            } else {
                 System.out.println("Falha ao adicionar o produto.");
             }
 
             cartDao.read(shC);
         }
-        //Client cl = new Client(name);
 
-        //stockDao.delete(st);
-        //clientDAO.insert(cl);
+        // Client cl = new Client(name);
+
+        // stockDao.delete(st);
+
+        // clientDAO.insert(cl);
 
         DB.closeConnection();
         sc.close();
     }
 }
-

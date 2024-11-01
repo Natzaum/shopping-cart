@@ -26,20 +26,19 @@ public class StockDaoJDBC implements StockDao {
             int quantity[] = {25, 20, 10, 3, 10, 20};
             int rowsAffected = 0;
 
-            for(int i = 0; i < names.length; i++) {
-                st = conn.prepareStatement("INSERT INTO stock (name, category, price, quantity) VALUES (?, ?, ?, ?)");
-                st.setString(1, names[i]);
-                st.setString(2, categories[i]);
-                st.setDouble(3, prices[i]);
-                st.setInt(4, quantity[i]);
-                rowsAffected += st.executeUpdate();
+            for (int i = 0; i < names.length; i++) {
+                if (findByName(names[i]) == null) {
+                    st = conn.prepareStatement("INSERT INTO stock (name, category, price, quantity) VALUES (?, ?, ?, ?)");
+                    st.setString(1, names[i]);
+                    st.setString(2, categories[i]);
+                    st.setDouble(3, prices[i]);
+                    st.setInt(4, quantity[i]);
+                    rowsAffected += st.executeUpdate();
+                }
             }
 
             if(rowsAffected > 0){
                 System.out.println("Registro de produto realizado com sucesso!");
-            }
-            else{
-                System.out.println("Falha ao registrar o produto.");
             }
         }
         catch (SQLException e) {
@@ -101,8 +100,24 @@ public class StockDaoJDBC implements StockDao {
     }
 
     @Override
-    public void update(Stock obj) {
+    public void updateStockQuantity(String productName, int quantityPurchased) {
+        PreparedStatement st = null;
+        try {
+            st = conn.prepareStatement("UPDATE stock SET quantity = quantity - ? WHERE name = ?");
+            st.setInt(1, quantityPurchased);
+            st.setString(2, productName);
 
+            st.executeUpdate();
+
+        } catch (SQLException e) {
+            throw new DbException(e.getMessage());
+        } finally {
+            try {
+                if (st != null) st.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
     }
 
     @Override
