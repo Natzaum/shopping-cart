@@ -35,6 +35,8 @@ public static final String user = "your_username";
 public static final String password = "your_password";
 
 4. Using the Program
+
+You can generate new items using stockDao.insert(st); (Pre-defined items).
    
 The program will display the list of available products and prompt for the name of the product you want to add to the cart.
 
