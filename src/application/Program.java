@@ -22,6 +22,7 @@ public class Program {
         StockDao stockDao = DaoFactory.createStockDao();
         CartDao cartDao = DaoFactory.createCartDao();
 
+        ShoppingCart shC = new ShoppingCart();
         Stock st = new Stock();
 
         //System.out.println("Registre seu nome de usuario: ");
@@ -67,6 +68,8 @@ public class Program {
             else{
                 System.out.println("Falha ao adicionar o produto.");
             }
+
+            cartDao.read(shC);
         }
         //Client cl = new Client(name);
 

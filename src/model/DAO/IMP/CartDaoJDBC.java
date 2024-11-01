@@ -4,12 +4,15 @@ import Store.ShoppingCart;
 import db.DbException;
 import model.DAO.CartDao;
 
+import javax.xml.transform.Result;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class CartDaoJDBC implements CartDao {
-    private Connection conn;
+    private final Connection conn;
+
     public CartDaoJDBC(Connection conn) {
         this.conn = conn;
     }
@@ -27,12 +30,10 @@ public class CartDaoJDBC implements CartDao {
             st.setString(4, obj.getCategory());
             st.setDouble(5, obj.getPrice());
 
-            // Calcula o totalValue como price * quantity
             double totalValue = obj.getPrice() * obj.getQuantity();
             st.setDouble(6, totalValue);
 
             st.executeUpdate();
-
 
         } catch (SQLException e) {
             throw new DbException(e.getMessage());
@@ -47,7 +48,20 @@ public class CartDaoJDBC implements CartDao {
 
     @Override
     public void read(ShoppingCart obj) {
+        String query = "SELECT name, quantity FROM shoppingcart";
 
+        try (PreparedStatement st = conn.prepareStatement(query)){
+            ResultSet rs = st.executeQuery();
+
+            while(rs.next()){
+                String name = rs.getString("name");
+                int quantity = rs.getInt("quantity");
+
+                System.out.printf("Itens no carrinho: %s - %d %n", name, quantity);
+            }
+        } catch (Exception e) {
+            throw new DbException(e.getMessage());
+        }
     }
 
     @Override

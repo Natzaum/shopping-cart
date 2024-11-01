@@ -9,7 +9,7 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
 public class ClientDaoJDBC implements ClientDAO {
-    private Connection conn;
+    private final Connection conn;
 
     public ClientDaoJDBC(Connection conn) {
         this.conn = conn;
@@ -23,10 +23,9 @@ public class ClientDaoJDBC implements ClientDAO {
             st.setString(1, obj.getName());
 
             int rowsAffected = st.executeUpdate();
-            if(rowsAffected > 0){
+            if (rowsAffected > 0) {
                 System.out.println("Usuario registrado com sucesso! Pode seguir para o seu carrinho de compras!");
-            }
-            else{
+            } else {
                 System.out.println("Falha ao registrar o cliente!");
             }
 
