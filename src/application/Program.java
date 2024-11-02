@@ -23,10 +23,13 @@ public class Program {
         CartDao cartDao = DaoFactory.createCartDao();
 
         ShoppingCart shC = new ShoppingCart();
-        Stock st = new Stock();
 
         System.out.println("Registre seu nome de usuario: ");
         String name = sc.nextLine();
+        Client cl = new Client(name);
+        Stock st = new Stock();
+
+        clientDAO.insert(cl);
 
         if (stockDao.findByName(st.getName()) == null) {
             stockDao.insert(st);
@@ -91,12 +94,6 @@ public class Program {
                 System.out.println("Falha ao adicionar o produto.");
             }
         }
-
-        Client cl = new Client(name);
-
-        // stockDao.delete(st);
-
-        clientDAO.insert(cl);
 
         DB.closeConnection();
         sc.close();
