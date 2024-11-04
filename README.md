@@ -44,8 +44,8 @@ Enter the product name and the desired quantity.
 
 You can also enter:
 
-"sair" to finish the purchase.
+"exit" to finish the purchase.
 
-"remover" to remove an item from the cart. The program will ask for the name of the item to be removed.
+"remove" to remove an item from the cart. The program will ask for the name of the item to be removed.
 
 When items are added or removed, the program will calculate and display the total cart value.
