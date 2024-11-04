@@ -20,8 +20,8 @@ public class StockDaoJDBC implements StockDao {
     public void insert(Stock obj) {
         PreparedStatement st = null;
         try {
-            String names[] = {"RTX 3060 ti 12gb", "Ryzen 7 2.5hz", "i5 9400f", "Cadeira Gamer", "Headset HyperX", "Teclado mecanico"};
-            String categories[] = {"Eletronicos", "Eletronicos", "Eletronicos", "Conforto", "Perifericos", "Perifericos"};
+            String names[] = {"RTX 3060 ti 12gb", "Ryzen 7 2.5hz", "i5 9400f", "Gaming chair", "Headset HyperX", "Mechanic keyboard"};
+            String categories[] = {"Electronics", "Electronics", "Electronics", "Comfort", "Peripherals", "Peripherals"};
             double prices[] = {3500.00, 600.00, 980.00, 600.00, 580.00, 260.00};
             int quantity[] = {25, 20, 10, 20, 10, 20};
             int rowsAffected = 0;
@@ -38,7 +38,7 @@ public class StockDaoJDBC implements StockDao {
             }
 
             if(rowsAffected > 0){
-                System.out.println("Registro de produto realizado com sucesso!");
+                System.out.println("Product registration successful!");
             }
         }
         catch (SQLException e) {
@@ -66,7 +66,7 @@ public class StockDaoJDBC implements StockDao {
                 String category = rs.getString("category");
                 double price = rs.getDouble("price");
                 int quantity = rs.getInt("Quantity");
-                System.out.printf("ID: %d, nome: %s, categoria: %s, preço: %.2f, quantidade: %d%n", id, name, category, price, quantity);
+                System.out.printf("ID: %d, nome: %s, category: %s, price: %.2f, quantity: %d%n", id, name, category, price, quantity);
             }
         }
         catch(SQLException e){
@@ -125,7 +125,7 @@ public class StockDaoJDBC implements StockDao {
         PreparedStatement st = null;
         try{
             st = conn.prepareStatement("DELETE FROM stock WHERE name = ?");
-            st.setString(1, "Teclado mecanico");
+            st.setString(1, "Mechanic keyboard");
             int rowsAffected = st.executeUpdate();
 
         } catch (SQLException e) {

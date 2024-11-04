@@ -23,7 +23,6 @@ public class CartDaoJDBC implements CartDao {
         try {
             st = conn.prepareStatement("INSERT INTO shoppingCart (stock_id, quantity, name, category, price, totalValue) VALUES (?, ?, ?, ?, ?, ?)");
 
-            // Define os valores a serem inseridos
             st.setInt(1, obj.getStockID());
             st.setInt(2, obj.getQuantity());
             st.setString(3, obj.getName());
@@ -57,7 +56,7 @@ public class CartDaoJDBC implements CartDao {
                 String name = rs.getString("name");
                 int quantity = rs.getInt("quantity");
 
-                System.out.printf("Itens no carrinho: %s - %d %n", name, quantity);
+                System.out.printf("Cart items: %s - %d %n", name, quantity);
             }
         } catch (Exception e) {
             throw new DbException(e.getMessage());
@@ -77,9 +76,9 @@ public class CartDaoJDBC implements CartDao {
 
             int rowsAffected = st.executeUpdate();
             if (rowsAffected > 0) {
-                System.out.println("Item atualizado com sucesso no carrinho!");
+                System.out.println("Item successfully updated in the cart!");
             } else {
-                System.out.println("Item não encontrado para atualização.");
+                System.out.println("Item not found for update.");
             }
         } catch (SQLException e) {
             throw new DbException(e.getMessage());
@@ -101,9 +100,9 @@ public class CartDaoJDBC implements CartDao {
 
             int rowsAffected = st.executeUpdate();
             if (rowsAffected > 0) {
-                System.out.println("Item '" + productName + "' removido com sucesso do carrinho!");
+                System.out.println("Item " + productName + " successfully removed from the cart!");
             } else {
-                System.out.println("Item '" + productName + "' não encontrado no carrinho.");
+                System.out.println("Item " + productName + " not found in the cart.");
             }
 
         } catch (SQLException e) {

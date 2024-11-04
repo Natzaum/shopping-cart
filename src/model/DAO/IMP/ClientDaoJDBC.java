@@ -24,9 +24,9 @@ public class ClientDaoJDBC implements ClientDAO {
 
             int rowsAffected = st.executeUpdate();
             if (rowsAffected > 0) {
-                System.out.println("Usuario registrado com sucesso! Pode seguir para o seu carrinho de compras!");
+                System.out.println("User successfully registered! You may proceed to your shopping cart!");
             } else {
-                System.out.println("Falha ao registrar o cliente!");
+                System.out.println("Failed to register the customer!");
             }
 
         } catch (SQLException e) {
